@@ -1,0 +1,1 @@
+console.log('teorias de skibidi toiler')
