@@ -1,1 +1,15 @@
-console.log('teorias de skibidi toiler')
+import Login from "./components/Login.jsx";
+
+
+function App(){
+  return (
+    <div>
+      <Login/>
+    </div>
+    )
+}
+
+
+
+
+export default App;
