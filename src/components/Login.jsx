@@ -6,11 +6,11 @@ function Login() {
       <p className="title">Acceder</p>
       <form className="form">
         <div className="input-group">
-          <label >Usuario</label>
+          <label>Usuario</label>
           <input type="text" name="username" id="username" placeholder="" />
         </div>
         <div className="input-group">
-          <label >Contraseña</label>
+          <label>Contraseña</label>
           <input type="password" name="password" id="password" placeholder="" />
           <div className="forgot">
             <a rel="noopener noreferrer" href="#">
@@ -55,7 +55,7 @@ function Login() {
         </button>
       </div>
       <p className="signup">
-        No tienes cuenta    ?
+        No tienes cuenta ?
         <a rel="noopener noreferrer" href="#" className="">
           Crear cuenta
         </a>
