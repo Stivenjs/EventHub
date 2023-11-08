@@ -7,11 +7,11 @@ function Login() {
       <form className="form">
         <div className="input-group">
           <label>Usuario</label>
-          <input type="text" name="username" id="username" placeholder="" />
+          <input type="text" name="username" id="username" required/>
         </div>
         <div className="input-group">
           <label>Contraseña</label>
-          <input type="password" name="password" id="password" placeholder="" />
+          <input type="password" name="password" id="password" required />
           <div className="forgot">
             <a rel="noopener noreferrer" href="#">
               Olvidaste tu contraseña ?
