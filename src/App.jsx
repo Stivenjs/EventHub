@@ -1,15 +1,13 @@
 import Login from "./components/Login.jsx";
+import Landing from "./components/Landing.jsx";
+import Register from "./components/Register.jsx";
 
 
-function App(){
+function App() {
   return (
-    <div>
-      <Login/>
-    </div>
-    )
+    <Login/>
+  );
 }
 
-
-
-
 export default App;
+ 
