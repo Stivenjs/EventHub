@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import "./styles/LandingPage.css";
-const AuthForm = () => {
+import "../styles/LandingPage.css";
+
+const LandingPage = () => {
   const [isSignUp, setIsSignUp] = useState(true);
 
   const toggleForm = () => {
@@ -13,12 +14,6 @@ const AuthForm = () => {
         <form>
           <h1>Create Account</h1>
           <div className="social-icons">
-            <a href="#" className="icon">
-              <i className="fab fa-google-plus-g"></i>
-            </a>
-            <a href="#" className="icon">
-              <i className="fab fa-facebook-f"></i>
-            </a>
             <a href="#" className="icon">
               <i className="fab fa-github"></i>
             </a>
@@ -37,12 +32,6 @@ const AuthForm = () => {
         <form>
           <h1>Sign In</h1>
           <div className="social-icons">
-            <a href="#" className="icon">
-              <i className="fab fa-google-plus-g"></i>
-            </a>
-            <a href="#" className="icon">
-              <i className="fab fa-facebook-f"></i>
-            </a>
             <a href="#" className="icon">
               <i className="fab fa-github"></i>
             </a>
@@ -80,4 +69,4 @@ const AuthForm = () => {
   );
 };
 
-export default AuthForm;
+export default LandingPage;
