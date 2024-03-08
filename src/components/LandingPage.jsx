@@ -1,56 +1,83 @@
-import eventfff from "../Imgs/eventfff.png";
-import googlelogo from "../Imgs/googlelogo.png";
+import React, { useState } from "react";
 import "./styles/LandingPage.css";
-import { Link } from "react-router-dom";
+const AuthForm = () => {
+  const [isSignUp, setIsSignUp] = useState(true);
 
-export const LandingPage = () => {
+  const toggleForm = () => {
+    setIsSignUp(!isSignUp);
+  };
+
   return (
-    <div>
-      <div className="container">
-        <div className="title">
-          <div>
-            <img src={eventfff} alt="logo de Event Hub" />
-            <h1>Event Hub</h1>
-            <p>lleva a tus eventos al siguiente nivel</p>
+    <div className={`container ${isSignUp ? "active" : ""}`}>
+      <div className="form-container sign-up">
+        <form>
+          <h1>Create Account</h1>
+          <div className="social-icons">
+            <a href="#" className="icon">
+              <i className="fab fa-google-plus-g"></i>
+            </a>
+            <a href="#" className="icon">
+              <i className="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" className="icon">
+              <i className="fab fa-github"></i>
+            </a>
+            <a href="#" className="icon">
+              <i className="fab fa-linkedin-in"></i>
+            </a>
           </div>
-        </div>
-        <div className="login-content">
-          <div className="login">
-            <div className="form-title">
-              <img src={eventfff} alt="logo de Event Hub" />
-              <h1>Inscribirse</h1>
-              <p>ingresa tu informacion para comenzar</p>
-            </div>
-            <form>
-              <label>Nombre completo</label>
-              <input type="text" id="first-name" />
-              <label>Email</label>
-              <input type="text" id="email" />
-              <label>Nombre de usuario</label>
-              <input type="text" id="username" />
-              <label>Contraseña</label>
-              <input type="text" id="password" />
-              <label>Confirmar Contraseña</label>
-              <input type="text" id="confirm-pass" />
-              <label>
-                <input type="checkbox" id="term" /> Acepto los
-                <a href="#">terminos y condiciones</a>.{/* <button></button> */}
-              </label>
-            </form>
-            <button className="google-button">
-              <img
-                className="google-logo"
-                src={googlelogo}
-                alt="logo de google"
-              />
-              <p className="text-google">Continua con goolge</p>
+          <span>or use your email for registration</span>
+          <input type="text" placeholder="Name" />
+          <input type="email" placeholder="Email" />
+          <input type="password" placeholder="Password" />
+          <button>Sign Up</button>
+        </form>
+      </div>
+      <div className="form-container sign-in">
+        <form>
+          <h1>Sign In</h1>
+          <div className="social-icons">
+            <a href="#" className="icon">
+              <i className="fab fa-google-plus-g"></i>
+            </a>
+            <a href="#" className="icon">
+              <i className="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" className="icon">
+              <i className="fab fa-github"></i>
+            </a>
+            <a href="#" className="icon">
+              <i className="fab fa-linkedin-in"></i>
+            </a>
+          </div>
+          <span>or use your email and password</span>
+          <input type="email" placeholder="Email" />
+          <input type="password" placeholder="Password" />
+          <a href="#">Forget Your Password?</a>
+          <button>Sign In</button>
+        </form>
+      </div>
+      <div className="toggle-container">
+        <div className="toggle">
+          <div
+            className={`toggle-panel ${
+              isSignUp ? "toggle-left" : "toggle-right"
+            }`}
+          >
+            <h1>{isSignUp ? "Welcome Back!" : "Hello, Friend!"}</h1>
+            <p>
+              {isSignUp
+                ? "Enter your personal details to use all of site features"
+                : "Register with your personal details to use all of site features"}
+            </p>
+            <button className="hidden" onClick={toggleForm}>
+              {isSignUp ? "Sign In" : "Sign Up"}
             </button>
           </div>
         </div>
       </div>
-      <Link to="/App">
-        <button>hola king</button>
-      </Link>
     </div>
   );
 };
+
+export default AuthForm;
