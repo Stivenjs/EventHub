@@ -38,6 +38,10 @@ export const LandingPage = () => {
               </label>
             </form>
             <button className="google-button">
+              <p className="text-google">Continuar</p>
+            </button>
+            <br />
+            <button className="google-button">
               <img
                 className="google-logo"
                 src={googlelogo}
@@ -48,7 +52,7 @@ export const LandingPage = () => {
           </div>
         </div>
       </div>
-      <Link to="/App">
+      <Link to="/Login">
         <button>hola king</button>
       </Link>
     </div>
