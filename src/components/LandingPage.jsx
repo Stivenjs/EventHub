@@ -12,7 +12,7 @@ const LandingPage = () => {
     <div className={`container ${isSignUp ? "active" : ""}`}>
       <div className="form-container sign-up">
         <form>
-          <h1>Create Account</h1>
+          <h1>Crear cuenta</h1>
           <div className="social-icons">
             <a href="#" className="icon">
               <i className="fab fa-github"></i>
@@ -21,16 +21,16 @@ const LandingPage = () => {
               <i className="fab fa-linkedin-in"></i>
             </a>
           </div>
-          <span>or use your email for registration</span>
-          <input type="text" placeholder="Name" />
+          <span>Usar datos personales en su lugar</span>
+          <input type="text" placeholder="Nombre" />
           <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
-          <button>Sign Up</button>
+          <input type="password" placeholder="Contraseña" />
+          <button>Registrarse</button>
         </form>
       </div>
       <div className="form-container sign-in">
         <form>
-          <h1>Sign In</h1>
+          <h1>Inicia sesión</h1>
           <div className="social-icons">
             <a href="#" className="icon">
               <i className="fab fa-github"></i>
@@ -39,11 +39,11 @@ const LandingPage = () => {
               <i className="fab fa-linkedin-in"></i>
             </a>
           </div>
-          <span>or use your email and password</span>
+          <span>O utiliza tu correo electrónico y contraseña</span>
           <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
-          <a href="#">Forget Your Password?</a>
-          <button>Sign In</button>
+          <input type="password" placeholder="Contraseña" />
+          <a href="#">Olvido su contraseña?</a>
+          <button>Inicia sesión</button>
         </form>
       </div>
       <div className="toggle-container">
@@ -53,14 +53,14 @@ const LandingPage = () => {
               isSignUp ? "toggle-left" : "toggle-right"
             }`}
           >
-            <h1>{isSignUp ? "Welcome Back!" : "Hello, Friend!"}</h1>
+            <h1>{isSignUp ? "¡Bienvenido de nuevo!" : "¡Hola, amigo!"}</h1>
             <p>
               {isSignUp
-                ? "Enter your personal details to use all of site features"
-                : "Register with your personal details to use all of site features"}
+                ? "Ingrese sus datos personales para utilizar todas las funciones del sitio"
+                : "Regístrese con sus datos personales para utilizar todas las funciones del sitio"}
             </p>
             <button className="hidden" onClick={toggleForm}>
-              {isSignUp ? "Sign In" : "Sign Up"}
+              {isSignUp ? "Ingresar" : "Registrase"}
             </button>
           </div>
         </div>
