@@ -1,5 +1,13 @@
 import React, { useState } from "react";
+import Firebaseapp from "./Credenciales";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import "../styles/LandingPage.css";
+
+const auth = getAuth(Firebaseapp);
 
 const LandingPage = () => {
   const [isSignUp, setIsSignUp] = useState(true);
@@ -7,6 +15,8 @@ const LandingPage = () => {
   const toggleForm = () => {
     setIsSignUp(!isSignUp);
   };
+
+  const [registro, setRegistro] = useState(false);
 
   return (
     <div className={`container ${isSignUp ? "active" : ""}`}>
@@ -25,7 +35,7 @@ const LandingPage = () => {
           <input type="text" placeholder="Nombre" />
           <input type="email" placeholder="Email" />
           <input type="password" placeholder="Contraseña" />
-          <button>Registrarse</button>
+          <button href="#">Registrarse</button>
         </form>
       </div>
       <div className="form-container sign-in">
@@ -43,7 +53,7 @@ const LandingPage = () => {
           <input type="email" placeholder="Email" />
           <input type="password" placeholder="Contraseña" />
           <a href="#">Olvido su contraseña?</a>
-          <button>Inicia sesión</button>
+          <button href="#">Inicia sesión</button>
         </form>
       </div>
       <div className="toggle-container">
