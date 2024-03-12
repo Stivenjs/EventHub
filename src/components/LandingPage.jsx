@@ -1,60 +1,109 @@
-import eventfff from "../Imgs/eventfff.png";
-import googlelogo from "../Imgs/googlelogo.png";
-import "./styles/LandingPage.css";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import firebaseApp from "./Credenciales";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import "../styles/LandingPage.css";
 
-export const LandingPage = () => {
+const auth = getAuth(firebaseApp);
+
+const LandingPage = () => {
+  const [isSignUp, setIsSignUp] = useState(true);
+
+  const toggleForm = () => {
+    setIsSignUp(!isSignUp);
+  };
+
+  const registro = false;
+
+  const functAuthenticationLog = async (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    const name = e.target.name.value;
+    console.log(email, password);
+
+    if (!registro) {
+      await signInWithEmailAndPassword(auth, email, password);
+    }
+  };
+
+  const functAuthenticationReg = async (e) => {
+    e.preventDefault();
+    const regEmail = e.target.regEmail.value;
+    const regPass = e.target.regPass.value;
+    const name = e.target.name.value;
+
+    console.log(regEmail, regPass, name);
+
+    if (!registro) {
+      await createUserWithEmailAndPassword(auth, regEmail, regPass);
+      
+    }
+  };
+
   return (
-    <div>
-      <div className="container">
-        <div className="title">
-          <div>
-            <img src={eventfff} alt="logo de Event Hub" />
-            <h1>Event Hub</h1>
-            <p>lleva a tus eventos al siguiente nivel</p>
+    <div className={`container ${isSignUp ? "active" : ""}`}>
+      <div className="form-container sign-up">
+        <form onSubmit={functAuthenticationReg}>
+          <h1>Crear cuenta</h1>
+          <div className="social-icons">
+            <a href="#" className="icon">
+              <i className="fab fa-github"></i>
+            </a>
+            <a href="#" className="icon">
+              <i className="fab fa-linkedin-in"></i>
+            </a>
           </div>
-        </div>
-        <div className="login-content">
-          <div className="login">
-            <div className="form-title">
-              <img src={eventfff} alt="logo de Event Hub" />
-              <h1>Inscribirse</h1>
-              <p>ingresa tu informacion para comenzar</p>
-            </div>
-            <form>
-              <label>Nombre completo</label>
-              <input type="text" id="first-name" />
-              <label>Email</label>
-              <input type="text" id="email" />
-              <label>Nombre de usuario</label>
-              <input type="text" id="username" />
-              <label>Contraseña</label>
-              <input type="text" id="password" />
-              <label>Confirmar Contraseña</label>
-              <input type="text" id="confirm-pass" />
-              <label>
-                <input type="checkbox" id="term" /> Acepto los
-                <a href="#">terminos y condiciones</a>.{/* <button></button> */}
-              </label>
-            </form>
-            <button className="google-button">
-              <p className="text-google">Continuar</p>
-            </button>
-            <br />
-            <button className="google-button">
-              <img
-                className="google-logo"
-                src={googlelogo}
-                alt="logo de google"
-              />
-              <p className="text-google">Continua con goolge</p>
+
+          <span>Usar datos personales en su lugar</span>
+          <input type="text" placeholder="Nombre" id="name" />
+          <input type="email" placeholder="Email" id="regEmail" />
+          <input type="password" placeholder="Contraseña" id="regPass" />
+          <button>Registrarse</button>
+        </form>
+      </div>
+      <div className="form-container sign-in">
+        <form onSubmit={functAuthenticationLog}>
+          <h1>Inicia sesión</h1>
+          <div className="social-icons">
+            <a href="#" className="icon">
+              <i className="fab fa-github"></i>
+            </a>
+            <a href="#" className="icon">
+              <i className="fab fa-linkedin-in"></i>
+            </a>
+          </div>
+          <span>O utiliza tu correo electrónico y contraseña</span>
+          <input type="email" placeholder="Email" id="email" />
+          <input type="password" placeholder="Contraseña" id="password" />
+          <a href="#">Olvido su contraseña?</a>
+          <button>Inicia sesión</button>
+        </form>
+      </div>
+      <div className="toggle-container">
+        <div className="toggle">
+          <div
+            className={`toggle-panel ${
+              isSignUp ? "toggle-left" : "toggle-right"
+            }`}
+          >
+            <h1>{isSignUp ? "¡Bienvenido de nuevo!" : "¡Hola, amigo!"}</h1>
+            <p>
+              {isSignUp
+                ? "Ingrese sus datos personales para utilizar todas las funciones del sitio"
+                : "Regístrese con sus datos personales para utilizar todas las funciones del sitio"}
+            </p>
+            <button className="hidden" onClick={toggleForm}>
+              {isSignUp ? "Ingresar" : "Registrase"}
             </button>
           </div>
         </div>
       </div>
-      <Link to="/Login">
-        <button>hola king</button>
-      </Link>
     </div>
   );
 };
+
+export default LandingPage;
