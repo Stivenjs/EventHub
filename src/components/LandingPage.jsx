@@ -18,21 +18,18 @@ const LandingPage = () => {
 
   const [registro, setRegistro] = useState(false);
 
-  const functAuthentication = async(e)=>{
+  const functAuthentication = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     const name = e.target.name.value;
-    console.log(email, password, name);
 
     if (registro) {
-      await createUserWithEmailAndPassword(auth ,email, password)
-    
+      await createUserWithEmailAndPassword(auth, email, password);
+    } else {
+      await signInWithEmailAndPassword(auth, email, password);
     }
-    else {
-      await signInWithEmailAndPassword(auth, email, password)
-    }
-  }
+  };
 
   return (
     <div className={`container ${isSignUp ? "active" : ""}`}>
@@ -48,10 +45,10 @@ const LandingPage = () => {
             </a>
           </div>
           <span>Usar datos personales en su lugar</span>
-          <input type="text" placeholder="Nombre" id="name"/>
-          <input type="email" placeholder="Email" id="email"/>
+          <input type="text" placeholder="Nombre" id="name" />
+          <input type="email" placeholder="Email" id="email" />
           <input type="password" placeholder="Contraseña" id="password" />
-          <button >Registrarse</button>
+          <button>Registrarse</button>
         </form>
       </div>
       <div className="form-container sign-in">

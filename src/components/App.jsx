@@ -18,7 +18,7 @@ function App() {
   });
   return (
     <div>
-      {usuario ? <Home correoUsuario={usuario.email} /> : <LandingPage />}
+     <LandingPage />
     </div>
   );
 }
