@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Firebaseapp from "./Credenciales";
+import firebaseApp from "./Credenciales";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -7,7 +7,7 @@ import {
 } from "firebase/auth";
 import "../styles/LandingPage.css";
 
-const auth = getAuth(Firebaseapp);
+const auth = getAuth(firebaseApp);
 
 const LandingPage = () => {
   const [isSignUp, setIsSignUp] = useState(true);
@@ -16,25 +16,38 @@ const LandingPage = () => {
     setIsSignUp(!isSignUp);
   };
 
-  const [registro, setRegistro] = useState(false);
+  const registro = false;
 
-  const functAuthentication = async (e) => {
+  const functAuthenticationLog = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     const name = e.target.name.value;
+    console.log(email, password);
 
-    if (registro) {
-      await createUserWithEmailAndPassword(auth, email, password);
-    } else {
+    if (!registro) {
       await signInWithEmailAndPassword(auth, email, password);
+    }
+  };
+
+  const functAuthenticationReg = async (e) => {
+    e.preventDefault();
+    const regEmail = e.target.regEmail.value;
+    const regPass = e.target.regPass.value;
+    const name = e.target.name.value;
+
+    console.log(regEmail, regPass, name);
+
+    if (!registro) {
+      await createUserWithEmailAndPassword(auth, regEmail, regPass);
+      
     }
   };
 
   return (
     <div className={`container ${isSignUp ? "active" : ""}`}>
       <div className="form-container sign-up">
-        <form onSubmit={functAuthentication}>
+        <form onSubmit={functAuthenticationReg}>
           <h1>Crear cuenta</h1>
           <div className="social-icons">
             <a href="#" className="icon">
@@ -44,15 +57,16 @@ const LandingPage = () => {
               <i className="fab fa-linkedin-in"></i>
             </a>
           </div>
+
           <span>Usar datos personales en su lugar</span>
           <input type="text" placeholder="Nombre" id="name" />
-          <input type="email" placeholder="Email" id="email" />
-          <input type="password" placeholder="Contraseña" id="password" />
+          <input type="email" placeholder="Email" id="regEmail" />
+          <input type="password" placeholder="Contraseña" id="regPass" />
           <button>Registrarse</button>
         </form>
       </div>
       <div className="form-container sign-in">
-        <form onSubmit={functAuthentication}>
+        <form onSubmit={functAuthenticationLog}>
           <h1>Inicia sesión</h1>
           <div className="social-icons">
             <a href="#" className="icon">
@@ -63,8 +77,8 @@ const LandingPage = () => {
             </a>
           </div>
           <span>O utiliza tu correo electrónico y contraseña</span>
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Contraseña" />
+          <input type="email" placeholder="Email" id="email" />
+          <input type="password" placeholder="Contraseña" id="password" />
           <a href="#">Olvido su contraseña?</a>
           <button>Inicia sesión</button>
         </form>
