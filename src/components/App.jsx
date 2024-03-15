@@ -16,11 +16,7 @@ function App() {
       setUsuario(null);
     }
   });
-  return (
-    <div>
-     <LandingPage />
-    </div>
-  );
+  return <div>{usuario ? <Home /> : <LandingPage />}</div>;
 }
 
 export default App;
