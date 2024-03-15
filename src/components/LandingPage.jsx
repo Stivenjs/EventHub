@@ -1,73 +1,82 @@
+// Importacion de depencias
 import React, { useState } from "react";
-import Firebaseapp from "./Credenciales";
+import firebaseApp from "./Credenciales";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import "../styles/LandingPage.css";
+import { signInWithGoogle } from "./signInWithGoogle";
+import google from "../Imgs/google-logo.png";
+import facebook from "../Imgs/facebook-logo.png";
+// Credenciales de firebase
+const auth = getAuth(firebaseApp);
 
-const auth = getAuth(Firebaseapp);
-
+// Estado para mostrar ventana de Inicio de session o creacion de cuenta
 const LandingPage = () => {
   const [isSignUp, setIsSignUp] = useState(true);
 
   const toggleForm = () => {
     setIsSignUp(!isSignUp);
   };
-
-  const [registro, setRegistro] = useState(false);
-
-  const functAuthentication = async(e)=>{
+  // Funcion para seleccionar las id correspondientes
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     const name = e.target.name.value;
-    console.log(email, password, name);
-
-    if (registro) {
-      await createUserWithEmailAndPassword(auth ,email, password)
-    
+    //Logica para crear ingresar, o validar usuarios
+    if (isSignUp) {
+      await createUserWithEmailAndPassword(auth, email, password);
+    } else {
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+      } catch (error) {
+        alert("Correo o contraseña incorrectos");
+      }
     }
-    else {
-      await signInWithEmailAndPassword(auth, email, password)
-    }
-  }
+  };
 
   return (
     <div className={`container ${isSignUp ? "active" : ""}`}>
       <div className="form-container sign-up">
-        <form onSubmit={functAuthentication}>
-          <h1>Crear cuenta</h1>
+        <form onSubmit={handleSubmit}>
+          <h1>{isSignUp ? "Crear cuenta" : "Inicia sesión"}</h1>
           <div className="social-icons">
-            <a href="#" className="icon">
-              <i className="fab fa-github"></i>
-            </a>
-            <a href="#" className="icon">
-              <i className="fab fa-linkedin-in"></i>
-            </a>
+            <img
+              onClick={signInWithGoogle}
+              src={google}
+              className="icon-google"
+            />
+            <img src={facebook} className="icon-facebook" />
+            <i className="Facebook"></i>
           </div>
+
           <span>Usar datos personales en su lugar</span>
-          <input type="text" placeholder="Nombre" id="name"/>
-          <input type="email" placeholder="Email" id="email"/>
+          <input type="text" placeholder="Nombre" id="name" />
+          <input type="email" placeholder="Email" id="email" />
           <input type="password" placeholder="Contraseña" id="password" />
-          <button >Registrarse</button>
+          <button>{isSignUp ? "Registrarse" : "Inicia sesión"}</button>
         </form>
       </div>
       <div className="form-container sign-in">
-        <form onSubmit={functAuthentication}>
+        <form onSubmit={handleSubmit}>
           <h1>Inicia sesión</h1>
           <div className="social-icons">
-            <a href="#" className="icon">
-              <i className="fab fa-github"></i>
-            </a>
-            <a href="#" className="icon">
-              <i className="fab fa-linkedin-in"></i>
-            </a>
+            <img
+              onClick={signInWithGoogle}
+              src={google}
+              className="icon-google"
+            />
+            <i className="fab fa-github"></i>
+
+            <img src={facebook} className="icon" />
+            <i className="fab fa-linkedin-in"></i>
           </div>
           <span>O utiliza tu correo electrónico y contraseña</span>
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Contraseña" />
+          <input type="email" placeholder="Email" id="email" />
+          <input type="password" placeholder="Contraseña" id="password" />
           <a href="#">Olvido su contraseña?</a>
           <button>Inicia sesión</button>
         </form>

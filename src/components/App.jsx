@@ -1,11 +1,11 @@
 import LandingPage from "./LandingPage";
 import Home from "./Home";
-import Firebaseapp from "./Credenciales";
+import firebaseApp from "./Credenciales";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useState } from "react";
 
 function App() {
-  const auth = getAuth(Firebaseapp);
+  const auth = getAuth(firebaseApp);
 
   const [usuario, setUsuario] = useState(null);
 
@@ -16,11 +16,7 @@ function App() {
       setUsuario(null);
     }
   });
-  return (
-    <div>
-      {usuario ? <Home correoUsuario={usuario.email} /> : <LandingPage />}
-    </div>
-  );
+  return <div>{usuario ? <Home /> : <LandingPage />}</div>;
 }
 
 export default App;
