@@ -1,4 +1,3 @@
-// Importacion de las dependencias
 import React, { useState } from "react";
 import firebaseApp from "./Credenciales";
 import {
@@ -14,79 +13,93 @@ import { signInWithGitHub } from "./SignInWithGitHub";
 import google from "../Imgs/google-logo.png";
 import github from "../Imgs/github-logo.png";
 
+// Credenciales de firebase
 const auth = getAuth(firebaseApp);
 
+// Estado para mostrar ventana de Inicio de session o creacion de cuenta
 const LandingPage = () => {
   const [isSignUp, setIsSignUp] = useState(true);
 
   const toggleForm = () => {
     setIsSignUp(!isSignUp);
   };
-
-  const registro = false;
-
-  const functAuthenticationLog = async (e) => {
+  // Funcion para seleccionar las id correspondientes
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    const name = e.target.name.value;
-    console.log(email, password);
 
-    if (!registro) {
-      await signInWithEmailAndPassword(auth, email, password);
-    }
-  };
-
-  const functAuthenticationReg = async (e) => {
-    e.preventDefault();
-    const regEmail = e.target.regEmail.value;
-    const regPass = e.target.regPass.value;
-    const name = e.target.name.value;
-
-    console.log(regEmail, regPass, name);
-
-    if (!registro) {
-      await createUserWithEmailAndPassword(auth, regEmail, regPass);
-      
+    //Logica para crear ingresar, o validar usuarios
+    if (isSignUp) {
+      await createUserWithEmailAndPassword(auth, email, password);
+      sendEmailVerification(auth.currentUser).then(() => {
+        alert(
+          "Se le ha enviado un email, haga click para terminar de activar su cuenta."
+        );
+      });
+    } else {
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+      } catch (error) {
+        alert("Correo o contraseña incorrectos");
+      }
     }
   };
 
   return (
     <div className={`container ${isSignUp ? "active" : ""}`}>
       <div className="form-container sign-up">
-        <form onSubmit={functAuthenticationReg}>
-          <h1>Crear cuenta</h1>
+        <form onSubmit={handleSubmit}>
+          <h1>{isSignUp ? "Crear cuenta" : "Inicia sesión"}</h1>
           <div className="social-icons">
-            <a href="#" className="icon">
-              <i className="fab fa-github"></i>
-            </a>
-            <a href="#" className="icon">
-              <i className="fab fa-linkedin-in"></i>
-            </a>
+            <img
+              onClick={SignInWithGoogle}
+              src={google}
+              className="icon-google"
+            />
+            <img
+              src={github}
+              onClick={signInWithGitHub}
+              className="icon-google"
+            />
           </div>
 
-          <span>Usar datos personales en su lugar</span>
-          <input type="text" placeholder="Nombre" id="name" />
-          <input type="email" placeholder="Email" id="regEmail" />
-          <input type="password" placeholder="Contraseña" id="regPass" />
-          <button>Registrarse</button>
+          <span>Usar datos personales en su lugar.</span>
+          <input required type="email" placeholder="Email" id="email" />
+          <input
+            required
+            type="password"
+            placeholder="Contraseña"
+            id="password"
+          />
+          <button>{isSignUp ? "Registrarse" : "Inicia sesión"}</button>
         </form>
       </div>
       <div className="form-container sign-in">
-        <form onSubmit={functAuthenticationLog}>
+        <form onSubmit={handleSubmit}>
           <h1>Inicia sesión</h1>
           <div className="social-icons">
-            <a href="#" className="icon">
-              <i className="fab fa-github"></i>
-            </a>
-            <a href="#" className="icon">
-              <i className="fab fa-linkedin-in"></i>
-            </a>
+            <img
+              onClick={SignInWithGoogle}
+              src={google}
+              className="icon-google"
+            />
+            <img
+              src={github}
+              onClick={signInWithGitHub}
+              className="icon-google"
+            />
           </div>
           <span>O utiliza tu correo electrónico y contraseña</span>
-          <input type="email" placeholder="Email" id="email" />
-          <input type="password" placeholder="Contraseña" id="password" />
-          <a href="#">Olvido su contraseña?</a>
+          <input required type="email" placeholder="Email" id="email" />
+          <input
+            required
+            type="password"
+            placeholder="Contraseña"
+            id="password"
+          />
+          <Link to="/reset-password">Olvidó su contraseña?</Link>{" "}
+          {/* Enlace para redirigir al componente ResetPassword */}
           <button>Inicia sesión</button>
         </form>
       </div>
