@@ -4,9 +4,9 @@ import firebaseApp from './Credenciales';
 
 const auth = getAuth(firebaseApp);
 
-const signInWithGoogle = () => {
+const SignInWithGoogle = () => {
   const provider = new GoogleAuthProvider();
   return signInWithPopup(auth, provider);
 };
 
-export { signInWithGoogle };
+export { SignInWithGoogle };
