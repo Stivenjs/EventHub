@@ -5,10 +5,17 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  sendEmailVerification,
 } from "firebase/auth";
+import { Link } from "react-router-dom"; // Importa Link desde react-router-dom
 import "../styles/LandingPage.css";
+import { SignInWithGoogle } from "./SignInWithGoogle";
+import { signInWithGitHub } from "./SignInWithGitHub";
+import google from "../Imgs/google-logo.png";
+import github from "../Imgs/github-logo.png";
 
-// Funcion de estado para el cambio de paneles entre el registro y el login
+const auth = getAuth(firebaseApp);
+
 const LandingPage = () => {
   const [isSignUp, setIsSignUp] = useState(true);
 
@@ -16,25 +23,19 @@ const LandingPage = () => {
     setIsSignUp(!isSignUp);
   };
 
-  // Variables para la autenticacion de usuario
-  const auth = getAuth(firebaseApp);
-
-  const validation = false;
-
-  // Autenticacion de inicio de sesion
+  const registro = false;
 
   const functAuthenticationLog = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     const name = e.target.name.value;
+    console.log(email, password);
 
-    if (!validation) {
+    if (!registro) {
       await signInWithEmailAndPassword(auth, email, password);
     }
   };
-
-  // Autenticacion de registro de usuarios
 
   const functAuthenticationReg = async (e) => {
     e.preventDefault();
@@ -42,72 +43,69 @@ const LandingPage = () => {
     const regPass = e.target.regPass.value;
     const name = e.target.name.value;
 
-    if (!validation) {
+    console.log(regEmail, regPass, name);
+
+    if (!registro) {
       await createUserWithEmailAndPassword(auth, regEmail, regPass);
+      
     }
   };
 
   return (
-    <div className="body-container">
-      {/* Login y registro */}
-      <div className={`container ${isSignUp ? "active" : ""}`}>
-        <div className="form-container sign-up">
-          {/* Registro de usuarios  */}
-          <form onSubmit={functAuthenticationReg}>
-            <h1>Crear cuenta</h1>
-            <div className="social-icons">
-              <a href="#" className="icon">
-                <i className="fab fa-github"></i>
-              </a>
-              <a href="#" className="icon">
-                <i className="fab fa-linkedin-in"></i>
-              </a>
-            </div>
+    <div className={`container ${isSignUp ? "active" : ""}`}>
+      <div className="form-container sign-up">
+        <form onSubmit={functAuthenticationReg}>
+          <h1>Crear cuenta</h1>
+          <div className="social-icons">
+            <a href="#" className="icon">
+              <i className="fab fa-github"></i>
+            </a>
+            <a href="#" className="icon">
+              <i className="fab fa-linkedin-in"></i>
+            </a>
+          </div>
 
-            <span>Usar datos personales en su lugar</span>
-            <input type="text" placeholder="Nombre" id="name" />
-            <input type="email" placeholder="Email" id="regEmail" />
-            <input type="password" placeholder="Contraseña" id="regPass" />
-            <button>Registrarse</button>
-          </form>
-        </div>
-        {/* Inicio de sesion */}
-        <div className="form-container sign-in">
-          <form onSubmit={functAuthenticationLog}>
-            <h1>Inicia sesión</h1>
-            <div className="social-icons">
-              <a href="#" className="icon">
-                <i className="fab fa-github"></i>
-              </a>
-              <a href="#" className="icon">
-                <i className="fab fa-linkedin-in"></i>
-              </a>
-            </div>
-            <span>O utiliza tu correo electrónico y contraseña</span>
-            <input type="email" placeholder="Email" id="email" />
-            <input type="password" placeholder="Contraseña" id="password" />
-            <a href="#">Olvido su contraseña?</a>
-            <button>Inicia sesión</button>
-          </form>
-        </div>
-        {/* Cambio de paneles entre registro y login */}
-        <div className="toggle-container">
-          <div className="toggle">
-            <div
-              className={`toggle-panel ${
-                isSignUp ? "toggle-left" : "toggle-right"
-              }`}
-            >
-              <h1>{isSignUp ? "¡Hola, amigo!" : "¡Bienvenido de nuevo!"}</h1>
-              <p>
-                {isSignUp
-                  ? "Regístrese con sus datos personales para utilizar todas las funciones del sitio"
-                  : "Ingrese sus datos personales para utilizar todas las funciones del sitio"}
-              </p>
-              <button className="hidden" onClick={toggleForm}>
-                {isSignUp ? "Ingresar" : "Registrase"}
-              </button>
-            </div>
+          <span>Usar datos personales en su lugar</span>
+          <input type="text" placeholder="Nombre" id="name" />
+          <input type="email" placeholder="Email" id="regEmail" />
+          <input type="password" placeholder="Contraseña" id="regPass" />
+          <button>Registrarse</button>
+        </form>
+      </div>
+      <div className="form-container sign-in">
+        <form onSubmit={functAuthenticationLog}>
+          <h1>Inicia sesión</h1>
+          <div className="social-icons">
+            <a href="#" className="icon">
+              <i className="fab fa-github"></i>
+            </a>
+            <a href="#" className="icon">
+              <i className="fab fa-linkedin-in"></i>
+            </a>
+          </div>
+          <span>O utiliza tu correo electrónico y contraseña</span>
+          <input type="email" placeholder="Email" id="email" />
+          <input type="password" placeholder="Contraseña" id="password" />
+          <a href="#">Olvido su contraseña?</a>
+          <button>Inicia sesión</button>
+        </form>
+      </div>
+      <div className="toggle-container">
+        <div className="toggle">
+          <div
+            className={`toggle-panel ${
+              isSignUp ? "toggle-left" : "toggle-right"
+            }`}
+          >
+            <h1>{isSignUp ? "¡Bienvenido de nuevo!" : "¡Hola, amigo!"}</h1>
+            <p>
+              {isSignUp
+                ? "Ingrese sus datos personales para utilizar todas las funciones del sitio"
+                : "Regístrese con sus datos personales para utilizar todas las funciones del sitio"}
+            </p>
+            <button className="hidden" onClick={toggleForm}>
+              {isSignUp ? "Ingresar" : "Registrase"}
+            </button>
           </div>
         </div>
       </div>

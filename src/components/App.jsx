@@ -1,25 +1,12 @@
-import LandingPage from "./LandingPage";
-import Home from "./Home";
-import firebaseApp from "./Credenciales";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useState } from "react";
+import AppRoutes from "../routes/AppRoutes";
+import { BrowserRouter as Router } from "react-router-dom";
 
 function App() {
-  const auth = getAuth(firebaseApp);
 
-  const [usuario, setUsuario] = useState(null);
-
-  onAuthStateChanged(auth, (usuarioFirebase) => {
-    if (usuarioFirebase) {
-      setUsuario(usuarioFirebase);
-    } else {
-      setUsuario(null);
-    }
-  });
   return (
-    <div>
-      {usuario ? <Home correoUsuario={usuario.email} /> : <LandingPage />}
-    </div>
+    <Router>
+      <AppRoutes />
+    </Router>
   );
 }
 
