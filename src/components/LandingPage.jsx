@@ -64,7 +64,7 @@ const LandingPage = () => {
             />
           </div>
 
-          <span>Usar datos personales en su lugar</span>
+          <span>Usar datos personales en su lugar.</span>
           <input required type="email" placeholder="Email" id="email" />
           <input
             required
