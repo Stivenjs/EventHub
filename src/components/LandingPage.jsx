@@ -1,15 +1,18 @@
-// Importacion de depencias
 import React, { useState } from "react";
 import firebaseApp from "./Credenciales";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  sendEmailVerification,
 } from "firebase/auth";
+import { Link } from "react-router-dom"; // Importa Link desde react-router-dom
 import "../styles/LandingPage.css";
-import { signInWithGoogle } from "./signInWithGoogle";
+import { SignInWithGoogle } from "./SignInWithGoogle";
+import { signInWithGitHub } from "./SignInWithGitHub";
 import google from "../Imgs/google-logo.png";
-import facebook from "../Imgs/facebook-logo.png";
+import github from "../Imgs/github-logo.png";
+
 // Credenciales de firebase
 const auth = getAuth(firebaseApp);
 
@@ -25,10 +28,15 @@ const LandingPage = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    const name = e.target.name.value;
+
     //Logica para crear ingresar, o validar usuarios
     if (isSignUp) {
       await createUserWithEmailAndPassword(auth, email, password);
+      sendEmailVerification(auth.currentUser).then(() => {
+        alert(
+          "Se le ha enviado un email, haga click para terminar de activar su cuenta."
+        );
+      });
     } else {
       try {
         await signInWithEmailAndPassword(auth, email, password);
@@ -45,18 +53,25 @@ const LandingPage = () => {
           <h1>{isSignUp ? "Crear cuenta" : "Inicia sesión"}</h1>
           <div className="social-icons">
             <img
-              onClick={signInWithGoogle}
+              onClick={SignInWithGoogle}
               src={google}
               className="icon-google"
             />
-            <img src={facebook} className="icon-facebook" />
-            <i className="Facebook"></i>
+            <img
+              src={github}
+              onClick={signInWithGitHub}
+              className="icon-google"
+            />
           </div>
 
           <span>Usar datos personales en su lugar</span>
-          <input type="text" placeholder="Nombre" id="name" />
-          <input type="email" placeholder="Email" id="email" />
-          <input type="password" placeholder="Contraseña" id="password" />
+          <input required type="email" placeholder="Email" id="email" />
+          <input
+            required
+            type="password"
+            placeholder="Contraseña"
+            id="password"
+          />
           <button>{isSignUp ? "Registrarse" : "Inicia sesión"}</button>
         </form>
       </div>
@@ -65,19 +80,26 @@ const LandingPage = () => {
           <h1>Inicia sesión</h1>
           <div className="social-icons">
             <img
-              onClick={signInWithGoogle}
+              onClick={SignInWithGoogle}
               src={google}
               className="icon-google"
             />
-            <i className="fab fa-github"></i>
-
-            <img src={facebook} className="icon" />
-            <i className="fab fa-linkedin-in"></i>
+            <img
+              src={github}
+              onClick={signInWithGitHub}
+              className="icon-google"
+            />
           </div>
           <span>O utiliza tu correo electrónico y contraseña</span>
-          <input type="email" placeholder="Email" id="email" />
-          <input type="password" placeholder="Contraseña" id="password" />
-          <a href="#">Olvido su contraseña?</a>
+          <input required type="email" placeholder="Email" id="email" />
+          <input
+            required
+            type="password"
+            placeholder="Contraseña"
+            id="password"
+          />
+          <Link to="/reset-password">Olvidó su contraseña?</Link>{" "}
+          {/* Enlace para redirigir al componente ResetPassword */}
           <button>Inicia sesión</button>
         </form>
       </div>
