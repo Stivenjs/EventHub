@@ -1,5 +1,4 @@
 import LandingPage from "../components/LandingPage";
-import Home from "../components/Home";
 import ResetPassword from "../components/ResetPassword";
 import firebaseApp from "../components/Credenciales";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
