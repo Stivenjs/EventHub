@@ -1,70 +1,73 @@
 import firebaseApp from "../components/Credenciales";
 import { useEffect } from "react";
 import { getAuth, signOut } from "firebase/auth";
+import { NavigationBar } from "./NavigationBar";
 import "../styles/Home.css";
+
 const auth = getAuth(firebaseApp);
 
 function Home() {
   // Selector de secciones en el menu lateral
-  useEffect(() => {
-    const sideLinks = document.querySelectorAll(
-      ".sidebar .side-menu li a:not(.logout)"
-    );
+  // useEffect(() => {
+  //   const sideLinks = document.querySelectorAll(
+  //     ".sidebar .side-menu li a:not(.logout)"
+  //   );
 
-    sideLinks.forEach((item) => {
-      const li = item.parentElement;
-      item.addEventListener("click", () => {
-        sideLinks.forEach((i) => {
-          i.parentElement.classList.remove("active");
-        });
-        li.classList.add("active");
-      });
-    });
-  }, []);
+  //   sideLinks.forEach((item) => {
+  //     const li = item.parentElement;
+  //     item.addEventListener("click", () => {
+  //       sideLinks.forEach((i) => {
+  //         i.parentElement.classList.remove("active");
+  //       });
+  //       li.classList.add("active");
+  //     });
+  //   });
+  // }, []);
 
   // funcion para despliegue del menu lateral
-  const closeMenu = () => {
-    const sideBar = document.querySelector(".sidebar");
-    sideBar.classList.toggle("close");
-  };
+  // const closeMenu = () => {
+  //   const sideBar = document.querySelector(".sidebar");
+  //   sideBar.classList.toggle("close");
+  // };
 
   // Funcion para la barra de busqueda responsive
-  const searchBar = (e) => {
-    const searchBtn = document.querySelector(
-      ".content nav form .form-input button"
-    );
-    const searchBtnIcon = document.querySelector(
-      ".content nav form .form-input button .bx"
-    );
-    const searchForm = document.querySelector(".content nav form");
+  // const searchBar = (e) => {
+  //   const searchBtn = document.querySelector(
+  //     ".content nav form .form-input button"
+  //   );
+  //   const searchBtnIcon = document.querySelector(
+  //     ".content nav form .form-input button .bx"
+  //   );
+  //   const searchForm = document.querySelector(".content nav form");
 
-    if (window.innerWidth < 576) {
-      e.preventDefault();
-      searchForm.classList.toggle("show");
-      if (searchForm.classList.contains("show")) {
-        searchBtnIcon.classList.replace("bx-search", "bx-x");
-      } else {
-        searchBtnIcon.classList.replace("bx-x", "bx-search");
-      }
-    }
-  };
+  //   if (window.innerWidth < 576) {
+  //     e.preventDefault();
+  //     searchForm.classList.toggle("show");
+  //     if (searchForm.classList.contains("show")) {
+  //       searchBtnIcon.classList.replace("bx-search", "bx-x");
+  //     } else {
+  //       searchBtnIcon.classList.replace("bx-x", "bx-search");
+  //     }
+  //   }
+  // };
 
   // funcion para el cambio de tema entre claro y oscuro
-  const theme = () => {
-    const toggler = document.getElementById("theme-toggle");
-    const changeToggler = toggler;
+  // const theme = () => {
+  //   const toggler = document.getElementById("theme-toggle");
+  //   const changeToggler = toggler;
 
-    if (toggler.checked) {
-      document.body.classList.add("dark");
-    } else {
-      document.body.classList.remove("dark");
-    }
-  };
+  //   if (toggler.checked) {
+  //     document.body.classList.add("dark");
+  //   } else {
+  //     document.body.classList.remove("dark");
+  //   }
+  // };
 
   return (
     <>
+      <NavigationBar />
       {/* Sidebar */}
-      <div className="sidebar close">
+      {/* <div className="sidebar close">
         <a href="#" className="logo">
           <i className="bx bx-calendar-event"></i>
           <div className="logo-name">
@@ -73,46 +76,46 @@ function Home() {
         </a>
         <ul className="side-menu">
           <li className="active">
-            <a href="#">
+            <Link to="/home">
               <i className="bx bx-home"></i>Pagina principal
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#">
+            <Link to="/eventos">
               <i className="bx bx-calendar-plus"></i>Eventos
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#">
+            <Link to="/estadisticas">
               <i className="bx bx-analyse"></i>Estadisticas
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#">
+            <Link to="usuarios">
               <i className="bx bx-group"></i>Users
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#">
+            <Link to="configuracion">
               <i className="bx bx-cog"></i>Settings
-            </a>
+            </Link>
           </li>
         </ul>
         <ul className="side-menu">
           <li>
-            <a href="#" className="logout" onClick={() => signOut(auth)}>
+            <Link to="#" className="logout" onClick={() => signOut(auth)}>
               <i className="bx bx-log-out-circle"></i>
               Cerrar sesion
-            </a>
+            </Link>
           </li>
         </ul>
-      </div>
+      </div> */}
       {/* End of Sidebar */}
 
       {/* Main Content */}
       <div className="content">
         {/* Navbar */}
-        <nav>
+        {/* <nav>
           <i className="bx bx-menu" onClick={closeMenu}></i>
           <form action="#">
             <div className="form-input">
@@ -131,7 +134,7 @@ function Home() {
           <a href="#" className="profile">
             <img src="images/logo.png" />
           </a>
-        </nav>
+        </nav> */}
 
         {/* End of Navbar */}
 
