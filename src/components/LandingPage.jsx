@@ -6,9 +6,9 @@ import {
   signInWithEmailAndPassword,
   sendEmailVerification,
 } from "firebase/auth";
-import { Link } from "react-router-dom"; // Importa Link desde react-router-dom
+import { Link } from "react-router-dom";
 import "../styles/LandingPage.css";
-import { SignInWithGoogle } from "./SignInWithGoogle";
+import { SignInWithGoogle } from "./signInWithGoogle";
 import { signInWithGitHub } from "./SignInWithGitHub";
 import google from "../Imgs/google-logo.png";
 import github from "../Imgs/github-logo.png";
@@ -29,23 +29,27 @@ const LandingPage = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    //Logica para crear ingresar, o validar usuarios
-    if (isSignUp) {
-      await createUserWithEmailAndPassword(auth, email, password);
-      sendEmailVerification(auth.currentUser).then(() => {
-        alert(
-          "Se le ha enviado un email, haga click para terminar de activar su cuenta."
-        );
-      });
-    } else {
-      try {
+    try {
+      //Logica para crear ingresar, o validar usuarios
+      if (isSignUp) {
+        await createUserWithEmailAndPassword(auth, email, password);
+        sendEmailVerification(auth.currentUser).then(() => {
+          alert(
+            "Se le ha enviado un email, haga click para terminar de activar su cuenta."
+          );
+        });
+      } else {
         await signInWithEmailAndPassword(auth, email, password);
-      } catch (error) {
-        alert("Correo o contraseña incorrectos");
+      }
+    } catch (error) {
+      // Manejo de errores
+      if (error.code === "auth/email-already-in-use") {
+        alert("El correo electrónico ingresado ya está en uso.");
+      } else {
+        alert("Los datos ingresados son incorrectos.");
       }
     }
   };
-
   return (
     <div className={`container ${isSignUp ? "active" : ""}`}>
       <div className="form-container sign-up">
