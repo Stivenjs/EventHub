@@ -7,6 +7,7 @@ const auth = getAuth(firebaseApp);
 const SignInWithGoogle = () => {
   const provider = new GoogleAuthProvider();
   return signInWithPopup(auth, provider);
+  
 };
 
 export { SignInWithGoogle };

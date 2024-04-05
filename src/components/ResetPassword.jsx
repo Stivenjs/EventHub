@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'; // Importa los componentes de react-router-dom
-import firebaseApp from '../components/Credenciales';
-import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"; // Importa los componentes de react-router-dom
+import firebaseApp from "../components/Credenciales";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import "../styles/ResetPassword.css";
 
 const auth = getAuth(firebaseApp);
 
 const ResetPassword = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [resetSent, setResetSent] = useState(false);
   const [error, setError] = useState(null);
 
@@ -24,9 +24,13 @@ const ResetPassword = () => {
   return (
     <div>
       {resetSent ? (
-        <p>Se ha enviado un enlace para restablecer la contraseña a su correo electrónico.</p>
+        <p>
+          Se ha enviado un enlace para restablecer la contraseña a su correo
+          electrónico.
+        </p>
       ) : (
         <form onSubmit={handleResetPassword}>
+          <h2>Restablecer contraseña</h2>
           <input
             type="email"
             placeholder="Ingrese su correo electrónico"
@@ -35,8 +39,15 @@ const ResetPassword = () => {
             required
             className="input-password"
           />
-          <button className="buttons-password" type="submit">Restablecer contraseña</button>
-         <button className="buttons-password"> <Link className="link" to="/">Volver</Link></button>
+          <button className="buttons-password" type="submit">
+            Restablecer contraseña
+          </button>
+          <button className="buttons-password">
+            {" "}
+            <Link className="link" to="/">
+              Volver
+            </Link>
+          </button>
           {error && <p>{error}</p>}
         </form>
       )}
