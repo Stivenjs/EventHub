@@ -24,18 +24,10 @@ const ResetPassword = () => {
   return (
     <div>
       {resetSent ? (
-        <div>
-          <p>
-            Se ha enviado un enlace para restablecer la contraseña a su correo
-            electrónico.
-          </p>
-          <button className="buttons-password">
-            {" "}
-            <Link className="link" to="/">
-              Volver
-            </Link>
-          </button>
-        </div>
+        <p>
+          Se ha enviado un enlace para restablecer la contraseña a su correo
+          electrónico.
+        </p>
       ) : (
         <form onSubmit={handleResetPassword}>
           <h2>Restablecer contraseña</h2>
@@ -49,7 +41,7 @@ const ResetPassword = () => {
           />
           <button className="buttons-password" type="submit">
             Restablecer contraseña
-          </button>{" "}
+          </button>
           <button className="buttons-password">
             {" "}
             <Link className="link" to="/">
