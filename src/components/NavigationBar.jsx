@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useProfileImage } from "../context/ProfileImageContext";
+import UserProfile from "./UserProfile";
 import { getAuth, signOut } from "firebase/auth";
 import { Link } from "react-router-dom";
 import "../styles/NavigationBar.css";
@@ -9,8 +9,6 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 const auth = getAuth(firebaseApp);
 
 const NavigationBar = () => {
-
-  const { profileImage } = useProfileImage();
   // Selector de secciones en el menu lateral
   useEffect(() => {
     const sideLinks = document.querySelectorAll(
@@ -137,11 +135,7 @@ const NavigationBar = () => {
             <IoMdNotificationsOutline size={32} />
           </Link>
           <Link to="/perfil" className="profile">
-            <img
-              src={profileImage}
-              alt="User's photo"
-              className="profile-icon"
-            />
+            <UserProfile />
           </Link>
         </nav>
         {/* End of navbar */}

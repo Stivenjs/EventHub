@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getAuth, updateProfile } from "firebase/auth";
 import "../styles/UserProfile.css";
-import  NavigationBar  from "./NavigationBar";
+import NavigationBar from "./NavigationBar";
 import firebaseApp from "./Credenciales";
 
 const auth = getAuth(firebaseApp);
@@ -11,6 +11,7 @@ const UserDetails = () => {
   const [newDisplayName, setNewDisplayName] = useState("");
   const [newPhotoURL, setNewPhotoURL] = useState("");
 
+
   useEffect(() => {
     const user = auth.currentUser;
 
@@ -18,7 +19,7 @@ const UserDetails = () => {
       // Obtener los datos del usuario
       const displayName = user.displayName;
       const email = user.email;
-      const photoURL = user.photoURL;
+      const photoURL = user.photoURL; 
       const emailVerified = user.emailVerified;
       const uid = user.uid;
 
@@ -26,12 +27,12 @@ const UserDetails = () => {
       setUserDetails({
         displayName,
         email,
-        photoURL,
+        photoURL, // Utilizar la imagen de perfil del contexto
         emailVerified,
         uid,
       });
     }
-  }, []); // Se ejecuta solo una vez al montar el componente
+  }, []); // Dependencia añadida al contexto de la imagen de perfil
 
   const handleUpdateProfile = () => {
     const user = auth.currentUser;
