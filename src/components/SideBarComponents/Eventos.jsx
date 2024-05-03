@@ -5,7 +5,7 @@ export const Eventos = () => {
     <>
       <NavigationBar />
       <div className="content-centro">
-        <div className="centro">hola eventos</div>
+        <div className="centro">hola eventos yes king</div>
       </div>
     </>
   );
