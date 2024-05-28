@@ -1,17 +1,18 @@
-import { useEffect } from "react";
-import { useProfileImage } from "../context/ProfileImageContext";
+// NavigationBar.js
+import React, { useContext, useEffect } from "react";
 import { getAuth, signOut } from "firebase/auth";
 import { Link } from "react-router-dom";
 import "../styles/NavigationBar.css";
 import firebaseApp from "./Credenciales";
 import { IoMdNotificationsOutline } from "react-icons/io";
+import { FaUser } from "react-icons/fa";
+import { UserContext } from "../context/UserContext";
 
 const auth = getAuth(firebaseApp);
 
 const NavigationBar = () => {
+  const { userProfile } = useContext(UserContext);
 
-  const { profileImage } = useProfileImage();
-  // Selector de secciones en el menu lateral
   useEffect(() => {
     const sideLinks = document.querySelectorAll(
       ".sidebar .side-menu li a:not(.logout)"
@@ -28,18 +29,11 @@ const NavigationBar = () => {
     });
   }, []);
 
-  const focus = () => {
-    const li = document.querySelector("li");
-    console.log(li);
-  };
-
-  // funcion para despliegue del menu lateral
   const closeMenu = () => {
     const sideBar = document.querySelector(".sidebar");
     sideBar.classList.toggle("close");
   };
 
-  // Funcion para la barra de busqueda responsive
   const searchBar = (e) => {
     const searchBtn = document.querySelector(
       ".content nav form .form-input button"
@@ -60,7 +54,6 @@ const NavigationBar = () => {
     }
   };
 
-  // funcion para el cambio de tema entre claro y oscuro
   const theme = () => {
     const toggler = document.getElementById("theme-toggle");
 
@@ -73,7 +66,6 @@ const NavigationBar = () => {
 
   return (
     <>
-      {/* Sidebar */}
       <div className="sidebar close">
         <Link to="/" className="logo">
           <i className="bx bx-calendar-event"></i>
@@ -87,7 +79,7 @@ const NavigationBar = () => {
               <i className="bx bx-home"></i>Pagina principal
             </Link>
           </li>
-          <li onClick={focus}>
+          <li>
             <Link to="/eventos">
               <i className="bx bx-calendar-plus"></i>Eventos
             </Link>
@@ -111,16 +103,12 @@ const NavigationBar = () => {
         <ul className="side-menu">
           <li>
             <Link to="/" className="logout" onClick={() => signOut(auth)}>
-              <i className="bx bx-log-out-circle"></i>
-              Cerrar sesion
+              <i className="bx bx-log-out-circle"></i>Cerrar sesion
             </Link>
           </li>
         </ul>
       </div>
-      {/* End of Sidebar */}
-
       <div className="content">
-        {/* Navbar */}
         <nav>
           <i className="bx bx-menu" onClick={closeMenu}></i>
           <form action="#">
@@ -137,14 +125,17 @@ const NavigationBar = () => {
             <IoMdNotificationsOutline size={32} />
           </Link>
           <Link to="/perfil" className="profile">
-            <img
-              src={profileImage}
-              alt="User's photo"
-              className="profile-icon"
-            />
+            {userProfile ? (
+              <img
+                src={userProfile.photoURL}
+                alt="User's photo"
+                style={{ width: "32px", height: "32px", borderRadius: "50%" }}
+              />
+            ) : (
+              <FaUser />
+            )}
           </Link>
         </nav>
-        {/* End of navbar */}
       </div>
     </>
   );
