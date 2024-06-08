@@ -1,7 +1,6 @@
-// src/context/UserContext.js
-import React, { createContext, useState, useEffect } from 'react';
-import { getAuth } from 'firebase/auth';
-import firebaseApp from '../components/Credenciales'; // Ajusta la ruta según sea necesario
+import React, { createContext, useState, useEffect } from "react";
+import { getAuth } from "firebase/auth";
+import firebaseApp from "../components/Credenciales";
 
 const UserContext = createContext();
 

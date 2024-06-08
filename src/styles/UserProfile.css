@@ -1,10 +1,33 @@
-.profile-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    height: 100vh;
-  
+/* styles/UserProfile.css */
+
+.profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.user-img {
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
 
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  background-color: #eee;
+  border: none;
+  margin: 8px 0;
+  padding: 10px 15px;
+  font-size: 13px;
+  border-radius: 8px;
+  width: 100%;
+  outline: none;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px 20;
+}
