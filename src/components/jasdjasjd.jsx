@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import "../styles/NavigationBar.css";
 import firebaseApp from "./Credenciales";
 import { IoMdNotificationsOutline } from "react-icons/io";
+import UserMenu from "./SideBarComponents/UserMenu";
 import { UserContext } from "../context/UserContext";
 import { FaUser } from "react-icons/fa";
 
@@ -75,7 +76,7 @@ const NavigationBar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/Lista de eventos">
+            <Link to="/estadisticas">
               <i className="bx bx-analyse"></i>Estadisticas
             </Link>
           </li>

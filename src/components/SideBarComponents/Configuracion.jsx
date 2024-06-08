@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import  NavigationBar  from "../NavigationBar";
-import "./Prueba.css";
+
 
 export const Configuracion = () => {
   useEffect(() => {
