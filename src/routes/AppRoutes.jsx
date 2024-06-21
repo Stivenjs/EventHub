@@ -1,7 +1,7 @@
-// src/routes/AppRoutes.jsx
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { requestForToken, onMessageListener } from "../components/Credenciales";
 import LandingPage from "../components/LandingPage";
 import Home from "../components/Home";
 import UserProfile from "../components/UserProfile";
@@ -15,13 +15,42 @@ import { UserProvider } from "../context/UserContext";
 
 const auth = getAuth(firebaseApp);
 
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("/firebase-messaging-sw.js")
+    .then((registration) => {
+      console.log("Service Worker registrado con éxito:", registration);
+    })
+    .catch((err) => {
+      console.error("Error al registrar el Service Worker:", err);
+    });
+}
+
 function AppRoutes() {
   const [usuario, setUsuario] = useState(null);
   const [cargando, setCargando] = useState(true);
+  const [isTokenFound, setTokenFound] = useState(false);
+
+  useEffect(() => {
+    const handlePermission = async () => {
+      try {
+        const permission = await Notification.requestPermission();
+        if (permission === "granted") {
+        } else {
+        }
+      } catch (error) {}
+    };
+
+    handlePermission();
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (usuarioFirebase) => {
-      setUsuario(usuarioFirebase);
+      if (usuarioFirebase) {
+        const userId = usuarioFirebase.uid;
+        setUsuario(usuarioFirebase);
+        requestForToken(setTokenFound, userId);
+      }
       setCargando(false);
     });
 
