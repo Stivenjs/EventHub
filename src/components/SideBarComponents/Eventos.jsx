@@ -3,6 +3,7 @@ import { getFirestore, collection, addDoc } from "firebase/firestore";
 import firebaseApp from "../Credenciales";
 import NavigationBar from "../NavigationBar";
 import "../../styles/Eventos.css";
+import axios from "axios";
 
 const firestore = getFirestore(firebaseApp);
 
@@ -30,8 +31,7 @@ const Eventos = () => {
       imageUrl
     ) {
       try {
-        const eventRef = collection(firestore, "events");
-        await addDoc(eventRef, {
+        await axios.post("http://localhost:3000/nuevo-evento", {
           name,
           date,
           time,
@@ -42,6 +42,7 @@ const Eventos = () => {
           description,
           imageUrl,
         });
+
         console.log("Evento agregado correctamente");
         setName("");
         setDate("");

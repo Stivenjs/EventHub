@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { requestForToken, onMessageListener } from "../components/Credenciales";
@@ -36,9 +36,13 @@ function AppRoutes() {
       try {
         const permission = await Notification.requestPermission();
         if (permission === "granted") {
+          console.log("Permiso de notificación concedido.");
         } else {
+          console.log("Permiso de notificación denegado.");
         }
-      } catch (error) {}
+      } catch (error) {
+        console.error("Error al solicitar permiso de notificación:", error);
+      }
     };
 
     handlePermission();
@@ -55,6 +59,16 @@ function AppRoutes() {
     });
 
     return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    onMessageListener()
+      .then((payload) => {
+        console.log("Mensaje recibido en primer plano:", payload);
+        const { title, body, image } = payload.notification;
+        new Notification(title, { body, icon: image });
+      })
+      .catch((err) => console.log("Error al recibir mensaje:", err));
   }, []);
 
   if (cargando) {
